@@ -1,0 +1,11 @@
+.env
+data/raw/articles/
+data/raw/metadata.json
+chroma_db/
+__pycache__/
+*.pyc
+.venv/
+venv/
+dist/
+*.egg-info/
+.ipynb_checkpoints/

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-SAMPLE_DIR = Path(__file__).parent / "data" / "sample"
+SAMPLE_DIR = Path(__file__).parent.parent / "data" / "sample"
 
 
 SAMPLE_MD = """# Как пройти проверку, если нет 18 лет

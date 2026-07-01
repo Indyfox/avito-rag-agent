@@ -1,6 +1,9 @@
 .env
 data/raw/articles/
 data/raw/metadata.json
+data/raw/article_ids.txt
+data/sample/
+eval_result*.txt
 chroma_db/
 __pycache__/
 *.pyc

@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.ingestion.embeddings import get_embedding_model, load_collection
-from src.retrieval.retriever import Retriever
+from src.retrieval.retriever import HybridRetriever
 from src.generation.rag_pipeline import RAGPipeline
 from src.api.schemas import QueryRequest, QueryResponse, SourceInfo
 
@@ -31,12 +31,12 @@ def get_pipeline() -> RAGPipeline:
     global _pipeline
     if _pipeline is None:
         chroma_dir = os.getenv("CHROMA_PERSIST_DIR", "./chroma_db")
-        embedding_model_name = os.getenv("EMBEDDING_MODEL", "intfloat/multilingual-e5-small")
+        embedding_model_name = os.getenv("EMBEDDING_MODEL", "intfloat/multilingual-e5-large-instruct")
         llm_model = os.getenv("LLM_MODEL", "gpt-4o-mini")
 
         model = get_embedding_model(embedding_model_name)
         collection = load_collection(persist_dir=chroma_dir)
-        retriever = Retriever(collection=collection, model=model, top_k=5)
+        retriever = HybridRetriever(collection=collection, model=model, top_k=10)
         _pipeline = RAGPipeline(retriever=retriever, llm_model=llm_model)
 
     return _pipeline

@@ -11,16 +11,16 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 import gradio as gr
 
 from src.ingestion.embeddings import get_embedding_model, load_collection
-from src.retrieval.retriever import Retriever
+from src.retrieval.retriever import HybridRetriever
 from src.generation.rag_pipeline import RAGPipeline
 
 chroma_dir = os.getenv("CHROMA_PERSIST_DIR", "./chroma_db")
 model_name = os.getenv("EMBEDDING_MODEL", "intfloat/multilingual-e5-small")
-llm_model = os.getenv("LLM_MODEL", "gpt-4o-mini")
+llm_model = os.getenv("LLM_MODEL", "openai/gpt-4o-mini")
 
 model = get_embedding_model(model_name)
 collection = load_collection(persist_dir=chroma_dir)
-retriever = Retriever(collection=collection, model=model, top_k=5)
+retriever = HybridRetriever(collection=collection, model=model, top_k=10)
 pipeline = RAGPipeline(retriever=retriever, llm_model=llm_model)
 
 
@@ -41,7 +41,7 @@ demo = gr.ChatInterface(
     fn=ask,
     title="AI-ассистент Авито",
     description="Задайте вопрос о правилах и функциях Авито. Ответ основан на официальных статьях поддержки.",
-    theme="soft",
+
     examples=[
         "Как вернуть товар после покупки?",
         "Как пройти проверку профиля?",

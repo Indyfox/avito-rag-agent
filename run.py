@@ -14,7 +14,7 @@ from src.ingestion.embeddings import (
     build_index,
     load_collection,
 )
-from src.retrieval.retriever import Retriever
+from src.retrieval.retriever import HybridRetriever
 from src.generation.rag_pipeline import RAGPipeline
 
 
@@ -47,7 +47,7 @@ def chat() -> None:
     print(f"Loading embedding model: {model_name}")
     model = get_embedding_model(model_name)
     collection = load_collection(persist_dir=chroma_dir)
-    retriever = Retriever(collection=collection, model=model, top_k=5)
+    retriever = HybridRetriever(collection=collection, model=model, top_k=10)
     pipeline = RAGPipeline(retriever=retriever, llm_model=llm_model)
 
     print("\nAI-ассистент Авито готов. Задайте вопрос (или /exit)\n")

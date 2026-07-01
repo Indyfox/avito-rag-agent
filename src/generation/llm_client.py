@@ -12,7 +12,11 @@ def get_llm_client() -> OpenAI:
         api_key = os.getenv("OPENAI_API_KEY")
         if not api_key:
             raise RuntimeError("OPENAI_API_KEY not set in environment")
-        _llm_client = OpenAI(api_key=api_key)
+        base_url = os.getenv("OPENAI_BASE_URL")
+        if base_url:
+            _llm_client = OpenAI(api_key=api_key, base_url=base_url)
+        else:
+            _llm_client = OpenAI(api_key=api_key)
     return _llm_client
 
 

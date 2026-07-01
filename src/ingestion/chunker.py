@@ -2,8 +2,8 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 
 def create_chunker(
-    chunk_size: int = 512,
-    chunk_overlap: int = 64,
+    chunk_size: int = 1024,
+    chunk_overlap: int = 128,
     separators: list[str] | None = None,
 ) -> RecursiveCharacterTextSplitter:
     if separators is None:
@@ -21,8 +21,8 @@ def create_chunker(
 
 def chunk_documents(
     documents: list[dict],
-    chunk_size: int = 512,
-    chunk_overlap: int = 64,
+    chunk_size: int = 1024,
+    chunk_overlap: int = 128,
 ) -> list[dict]:
     splitter = create_chunker(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
     chunks = []

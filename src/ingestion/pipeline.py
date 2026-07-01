@@ -13,7 +13,7 @@ from src.ingestion.embeddings import get_embedding_model, create_chroma_client, 
 def main() -> None:
     articles_dir = Path(os.getenv("ARTICLES_DIR", "data/raw/articles"))
     persist_dir = os.getenv("CHROMA_PERSIST_DIR", "./chroma_db")
-    model_name = os.getenv("EMBEDDING_MODEL", "intfloat/multilingual-e5-small")
+    model_name = os.getenv("EMBEDDING_MODEL", "intfloat/multilingual-e5-large-instruct")
 
     print(f"Loading articles from: {articles_dir}")
     documents = load_markdown_files(articles_dir)
